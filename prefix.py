@@ -23,13 +23,17 @@ operação: sum
 n1: 5
 n2: 4
 9
+
+Os resultados serão salvos em prefixcal.log`
 """
 __version__ = "0.1.0"
 
 #Pra receber os argumentos que o usário passar é preciso importar o sys.
 #Pra pegar os argumentos cria uma variável arguments...
-
+import os
 import sys
+from datetime import datetime
+
 arguments = sys.argv[1:]
 
 #if not arguments (se eu não tiver argumento nenhum qual a operação...)
@@ -53,8 +57,10 @@ if operation not in valid_operations:
     sys.exit(1)
 
 #validar os números
+#TODO: exceptions
 validated_nums = []
 for num in nums:
+    # TODO: Repetição while + exceptions
     if not num.replace(".", "").isdigit(): #para permitir float usa o replace
         print(f"Número invalido {num}") #adicionar placeroder sempre com f na frente
         sys.exit(1)
@@ -76,4 +82,12 @@ elif operation == "mul":
 elif operation == "div":
     result = n1 / n2
 
+path = os.curdir
+filepath = os.path.join(path, "prefixcalc.log")
+timestamp = datetime.now().isoformat()
+user = os.getenv('USER', 'anonymous')
+
+with open(filepath, "a") as file_:
+    file_.write(f"{timestamp} - {user} - {operation},{n1},{n2} = {result}\n")
+    
 print(f"O resultado é: {result}")
