@@ -1,0 +1,3 @@
+Minha primeiro nota	geral	Esta é uma nota geral
+Minha segunda nota	tecnologia	Python é muito difícil
+minha terceira nota	tecnologia	Java também é legal!!
