@@ -69,8 +69,12 @@ for num in nums:
     else:
         num = int(num)
     validated_nums.append(num)
-        
-n1, n2 = validated_nums #unpacking do validated_nums
+
+try:
+    n1, n2 = validated_nums #unpacking do validated_nums
+except ValueError as e:
+    print(str(e))
+    exit(1)
 
 #TODO: Usar dict de funcoes
 if operation == "sum":
@@ -82,12 +86,18 @@ elif operation == "mul":
 elif operation == "div":
     result = n1 / n2
 
-path = os.curdir
+path = "/"
 filepath = os.path.join(path, "prefixcalc.log")
 timestamp = datetime.now().isoformat()
 user = os.getenv('USER', 'anonymous')
 
-with open(filepath, "a") as file_:
-    file_.write(f"{timestamp} - {user} - {operation},{n1},{n2} = {result}\n")
-    
 print(f"O resultado é: {result}")
+
+try:
+    with open(filepath, "a") as file_:
+        file_.write(f"{timestamp} - {user} - {operation},{n1},{n2} = {result}\n")
+except PermissionError as e:
+    # TODO: logging
+    print(str(e))
+    sys.exit(1)
+
